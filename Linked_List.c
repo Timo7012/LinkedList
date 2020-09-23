@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct node{
     int val;
@@ -29,10 +30,10 @@ int find_list(int key, lnode* list){
             return find_list(key, list->next);
     }
     printf("Error:Not found key!\n");
-    return NULL;
+    return -1;
 }
 
-lnode* del(int key,lnode* list, char* isFirst){
+lnode* del(int key,lnode* list, bool isFirst){
     if (isFirst){
         lnode * tmp;
         if (list->key == key){
@@ -40,7 +41,7 @@ lnode* del(int key,lnode* list, char* isFirst){
             free(list);
             return tmp;
         } else {
-            *isFirst = 0;
+            isFirst = false;
             tmp = del(key,list,isFirst);
             return list;
         }
@@ -61,14 +62,69 @@ lnode* del(int key,lnode* list, char* isFirst){
     }
 }
 
-lnode* delete_list(int key, lnode* list){
-    char* isFirst=(char*)malloc(sizeof(char));
-    lnode* tmp=del(key, list,isFirst);
-    free(isFirst);
-    return tmp;
+void delete_list(int key, lnode* list){
+    bool isFirst = true;
+    list1 = del(key, list,isFirst);
 }
 
+void list_nodes(lnode* list){
+    if(list == NULL) return;
+    printf("\n---------------\n");
+    printf("Key is %d\nValue is %d", list->key, list->val);
+    printf("\n---------------\n\n");
+    list_nodes(list->next);
+}
+
+void menu(void){
+    printf("----------------------------Linked List Menu----------------------------\n\n");
+    printf("a - Add node\n");
+    printf("f - Find node by key\n");
+    printf("d - Delete node by key\n");
+    printf("l - List all nodes\n");
+    printf("e - Exit from program\n");
+    printf("\n\n----------------------------Linked List Menu----------------------------\n\n");
+}
+
+
+
 int main(void) {
+    menu();
+    int key;
+    int val;
+    char com = 'a';
+    while(com != 'e'){
+        printf("Please enter the command: ");
+        scanf(" %c",&com);
+        //com = getchar();
+        switch (com) {
+            case 'a':
+                printf("\nPlease, enter the key: ");
+                scanf("%d",&key);
+                printf("\nPlease, enter the value: ");
+                scanf("%d",&val);
+                add_list(key,val);
+                printf("Add is successful\n\n",val);
+                break;
+            case 'f':
+                printf("\nPlease, enter the key: ");
+                scanf("%d",&key);
+                val = find_list(key,list1);
+                printf("Value is %d\n\n",val);
+                break;
+            case 'd':
+                printf("\nPlease, enter the key: ");
+                scanf("%d",&key);
+                delete_list(key,list1);
+                printf("\nDelete is successful\n\n");
+                break;
+            case 'l':
+                list_nodes(list1);
+                break;
+            default:
+                menu();
+                break;
+        }
+    }
 
     return 0;
 }
