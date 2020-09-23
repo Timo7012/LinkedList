@@ -95,7 +95,6 @@ int main(void) {
     while(com != 'e'){
         printf("Please enter the command: ");
         scanf(" %c",&com);
-        //com = getchar();
         switch (com) {
             case 'a':
                 printf("\nPlease, enter the key: ");
@@ -103,7 +102,7 @@ int main(void) {
                 printf("\nPlease, enter the value: ");
                 scanf("%d",&val);
                 add_list(key,val);
-                printf("Add is successful\n\n",val);
+                printf("Add is successful\n\n");
                 break;
             case 'f':
                 printf("\nPlease, enter the key: ");
@@ -120,11 +119,13 @@ int main(void) {
             case 'l':
                 list_nodes(list1);
                 break;
+            case 'e':
+                printf("\nGood bye\n");
+                return 0;
             default:
                 menu();
                 break;
         }
     }
-
     return 0;
 }
